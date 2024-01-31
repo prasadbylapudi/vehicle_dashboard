@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 
 import { Button, Img, Input, Line, Radio, RadioGroup, Text } from "components";
 
-import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 const DesktopTwoPage = () => {
   const [currentTime, setCurrentTime] = useState("");
@@ -27,6 +26,12 @@ const DesktopTwoPage = () => {
     return () => clearInterval(interval);
   }, []); // Run once on component mount
 
+  useEffect(() => {
+    // Fetch data from localStorage when component mounts
+    const storedData = JSON.parse(localStorage.getItem("tollData")) || [];
+    setTableData(storedData);
+  }, []);
+
   const handleCompleteClick = () => {
     const data = {
       vehicleType: vehicleTypeRef.current.value,
@@ -40,9 +45,22 @@ const DesktopTwoPage = () => {
     // Update table data
     setTableData((prevData) => [...prevData, data]);
 
-    alert(`Toll for vehicle no ${vehicleNo} Completed ✔️.`);
+    // Store data in localStorage
+    const storedData = JSON.parse(localStorage.getItem("tollData")) || [];
+    storedData.push(data);
+    localStorage.setItem("tollData", JSON.stringify(storedData));
+
+    setTimeout(alert(`Toll for vehicle is Completed ✔️.`), 3000);
     console.log("submit data");
 
+    vehicleTypeRef.current.value = "";
+    vehicleNoRef.current.value = "";
+    amountRef.current.value = "";
+    barcodeRef.current.value = "";
+  };
+
+  const handleCancelClick = () => {
+    // Clear input fields
     vehicleTypeRef.current.value = "";
     vehicleNoRef.current.value = "";
     amountRef.current.value = "";
@@ -309,6 +327,7 @@ const DesktopTwoPage = () => {
                         className="cursor-pointer font-medium leading-[normal] min-w-[148px] sm:text-[21px] md:text-[23px] text-[25px] text-center"
                         shape="round"
                         color="red_600"
+                        onClick={handleCancelClick}
                       >
                         CANCEL
                       </Button>
@@ -339,21 +358,11 @@ const DesktopTwoPage = () => {
                     <tbody>
                       {tableData.map((item, index) => (
                         <tr key={index}>
-                          <td className="border border-gray-300 px-4 py-2">
-                            {item.vehicleNo}
-                          </td>
-                          <td className="border border-gray-300 px-4 py-2">
-                            {item.transactionId}
-                          </td>
-                          <td className="border border-gray-300 px-4 py-2">
-                            {item.amount}
-                          </td>
-                          <td className="border border-gray-300 px-4 py-2">
-                            {item.vehicleType}
-                          </td>
-                          <td className="border border-gray-300 px-4 py-2">
-                            {item.currentTime}
-                          </td>
+                          <td>{item.vehicleNo}</td>
+                          <td>{item.transactionId}</td>
+                          <td>{item.amount}</td>
+                          <td>{item.vehicleType}</td>
+                          <td>{item.currentTime}</td>
                         </tr>
                       ))}
                     </tbody>
