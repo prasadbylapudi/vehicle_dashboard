@@ -10,24 +10,31 @@ function Transactions() {
   }, []);
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto  h-full">
       <h1 className="text-center text-2xl my-4">Transaction History</h1>
       <div className="bg-gray-200 flex flex-col items-center justify-end p-2 rounded-[10px] w-full">
         <table className="table-auto min-w-max bg-gray-200">
           <thead>
             <tr>
+              <th className="border border-gray-300 px-2 py-1">#</th>
+
               <th className="border border-gray-300 px-2 py-1">Vehicle No</th>
               <th className="border border-gray-300 px-2 py-1">
                 Transaction ID
               </th>
               <th className="border border-gray-300 px-2 py-1">Amount</th>
               <th className="border border-gray-300 px-2 py-1">Car Type</th>
+              <th className="border border-gray-300 px-2 py-1">Date</th>
               <th className="border border-gray-300 px-2 py-1">TimeStamp</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="justify-center items-center">
             {tableData.map((item, index) => (
               <tr key={index}>
+                <td className="border border-gray-300 px-2 py-1">
+                  {index + 1}
+                </td>
+
                 <td className="border border-gray-300 px-2 py-1">
                   {item.vehicleNo}
                 </td>
@@ -39,6 +46,9 @@ function Transactions() {
                 </td>
                 <td className="border border-gray-300 px-2 py-1">
                   {item.vehicleType}
+                </td>
+                <td className="border border-gray-300 px-2 py-1">
+                  {item.currentDate}
                 </td>
                 <td className="border border-gray-300 px-2 py-1">
                   {item.currentTime}

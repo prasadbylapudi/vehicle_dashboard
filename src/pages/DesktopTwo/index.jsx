@@ -15,6 +15,7 @@ const DesktopTwoPage = () => {
   const barcodeRef = useRef(null);
 
   useEffect(() => {
+    // Update current time every second
     const interval = setInterval(() => {
       const now = new Date();
       let hours = now.getHours();
@@ -22,7 +23,7 @@ const DesktopTwoPage = () => {
       hours = hours % 12 || 12; // Convert hours to 12-hour format
       const minutes = now.getMinutes().toString().padStart(2, "0");
       setCurrentTime(`${hours}:${minutes} ${ampm}`);
-    }, 1000); // Update time every second
+    }, 1000);
 
     return () => clearInterval(interval);
   }, []); // Run once on component mount
@@ -34,26 +35,36 @@ const DesktopTwoPage = () => {
   }, []);
 
   const handleCompleteClick = () => {
+    const now = new Date();
+    let hours = now.getHours();
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12; // Convert hours to 12-hour format
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    const currentDate = `${now.getFullYear()}-${(now.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")}`;
+    const currentTime = `${hours}:${minutes} ${ampm}`;
+
     const data = {
       vehicleType: vehicleTypeRef.current.value,
       vehicleNo: vehicleNoRef.current.value,
       amount: amountRef.current.value,
       barcodeRef: barcodeRef.current.value,
       transactionId: Math.floor(Math.random() * 1000000),
-      currentTime,
+      currentDate: currentDate,
+      currentTime: currentTime,
     };
 
     // Update table data
     setTableData((prevData) => [...prevData, data]);
 
     // Store data in localStorage
-    const storedData = JSON.parse(localStorage.getItem("tollData")) || [];
-    storedData.push(data);
-    localStorage.setItem("tollData", JSON.stringify(storedData));
+    localStorage.setItem("tollData", JSON.stringify([...tableData, data]));
 
-    setTimeout(alert(`Toll for vehicle is Completed ✔️.`), 3000);
+    alert(`Toll for vehicle is Completed ✔️.`);
     console.log("submit data");
 
+    // Clear input fields
     vehicleTypeRef.current.value = "";
     vehicleNoRef.current.value = "";
     amountRef.current.value = "";
