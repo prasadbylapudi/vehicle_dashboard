@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 
 import { Button, Img, Input, Line, Radio, RadioGroup, Text } from "components";
+import { Link } from "react-router-dom";
 
 import "reactjs-popup/dist/index.css";
 const DesktopTwoPage = () => {
@@ -335,38 +336,40 @@ const DesktopTwoPage = () => {
                   </div>
                 </div>
                 <div className="bg-gray-200 flex flex-col items-center justify-end p-2 rounded-[10px] w-full">
-                  <table className="bg-gray-200 rounded-[10px] w-full">
-                    <thead>
-                      <tr>
-                        <th className="border border-gray-300 px-4 py-2">
-                          Vehicle No
-                        </th>
-                        <th className="border border-gray-300 px-4 py-2">
-                          Transaction ID
-                        </th>
-                        <th className="border border-gray-300 px-4 py-2">
-                          Amount
-                        </th>
-                        <th className="border border-gray-300 px-4 py-2">
-                          Car Type
-                        </th>
-                        <th className="border border-gray-300 px-4 py-2">
-                          TimeStamp
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {tableData.map((item, index) => (
-                        <tr key={index}>
-                          <td>{item.vehicleNo}</td>
-                          <td>{item.transactionId}</td>
-                          <td>{item.amount}</td>
-                          <td>{item.vehicleType}</td>
-                          <td>{item.currentTime}</td>
+                  <Link to="/history">
+                    <table className="bg-gray-200 rounded-[10px] w-full">
+                      <thead>
+                        <tr>
+                          <th className="border border-gray-300 px-4 py-2">
+                            Vehicle No
+                          </th>
+                          <th className="border border-gray-300 px-4 py-2">
+                            Transaction ID
+                          </th>
+                          <th className="border border-gray-300 px-4 py-2">
+                            Amount
+                          </th>
+                          <th className="border border-gray-300 px-4 py-2">
+                            Car Type
+                          </th>
+                          <th className="border border-gray-300 px-4 py-2">
+                            TimeStamp
+                          </th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {tableData.map((item, index) => (
+                          <tr key={index}>
+                            <td>{item.vehicleNo}</td>
+                            <td>{item.transactionId}</td>
+                            <td>{item.amount}</td>
+                            <td>{item.vehicleType}</td>
+                            <td>{item.currentTime}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </Link>
                 </div>
               </div>
               <div className="flex md:flex-1 flex-col gap-[26px] items-center justify-start w-[22%] md:w-full">
