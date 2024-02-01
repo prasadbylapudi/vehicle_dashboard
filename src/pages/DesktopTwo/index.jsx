@@ -364,6 +364,9 @@ const DesktopTwoPage = () => {
                             Car Type
                           </th>
                           <th className="border border-gray-300 px-4 py-2">
+                            date
+                          </th>
+                          <th className="border border-gray-300 px-4 py-2">
                             TimeStamp
                           </th>
                         </tr>
@@ -375,6 +378,9 @@ const DesktopTwoPage = () => {
                             <td>{item.transactionId}</td>
                             <td>{item.amount}</td>
                             <td>{item.vehicleType}</td>
+                            <td className="text-xs px-2 py-1">
+                              {item.currentDate}
+                            </td>
                             <td>{item.currentTime}</td>
                           </tr>
                         ))}
